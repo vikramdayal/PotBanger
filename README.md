@@ -2,6 +2,9 @@ Pot Banger
 
 Potbanger is a java application that uses the RxTx library to communicate with the Arduino board. There is an Arduino servo3 application which communicates with this application. This PotBanger application allows users to program indivual beats to bars to tell the ardunio board to initiate servo motors to bang pots and create music. Please have a look at my utube video to see how this works.
 
+The servo3 repo can be found here: https://github.com/vikramdayal/servo3
+
+
 Here is the link which shows some of the functions that I have programmed: 
 https://youtu.be/3F4XzU7_GYU
 
