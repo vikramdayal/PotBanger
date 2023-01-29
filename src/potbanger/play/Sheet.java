@@ -26,6 +26,8 @@ public class Sheet implements Serializable {
     Bar First = null;
     int _size = 0;
     transient static TwoWaySerialComm _com = null;
+    public static String CommPort;
+    public static int StartPin;
 
     public Sheet(String name) {
         _name = name;
@@ -35,7 +37,7 @@ public class Sheet implements Serializable {
         if (_com == null) {
             _com = new TwoWaySerialComm();
             try {
-                _com.connect("/dev/cu.usbmodemFD121");
+                _com.connect(CommPort);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
