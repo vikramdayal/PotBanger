@@ -125,6 +125,8 @@ public class BarScreen extends javax.swing.JDialog {
     }
 
     private void addDynamicComponents() {
+        int gridX=0;
+        int gridY=0;
         BtnRunFrame.addActionListener((ActionEvent e) -> {
             updateBar();
             RunCmd();
@@ -158,15 +160,40 @@ public class BarScreen extends javax.swing.JDialog {
         center.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = gridX;
+        gridX++;
+        c.gridy = gridY;
+        center.add(new Label("Pin#"),c);
         for (int j = 0; j < _NumSteps; j++) {
-            c.gridy =0;
-            c.gridx = j;
-            center.add(new Label(j % _bar.getNumFractions() +"/" + (j) / (_bar.getNumBeats() )));
+            if ((j % _bar.getNumFractions())== 0) {
+                c.gridx = gridX;
+                c.gridy = gridY;
+                gridX++;
+                center.add(new Label("          |          "),c);
+            }
+            c.gridy = gridY;
+            c.gridx = gridX;
+            gridX++;
+            center.add(new Label(j % _bar.getNumFractions() +"/" + (j) / (_bar.getNumBeats() )),c);
         }
+        gridY++;
         for (int i = 0; i < _NumDevices; i++) {
+            gridY++;
+            c.gridy = gridY;
+            gridX = 0;
+            c.gridx=gridX;
+            gridX++;
+            center.add(new Label("#" + (i + 1)), c);
             for (int j = 0; j < _NumSteps; j++) {
-                c.gridy = i+1;
-                c.gridx = j;
+                if ((j % _bar.getNumFractions())== 0) {
+                    c.gridx = gridX;
+                    gridX++;
+                    c.gridy = gridY;
+                    center.add(new Label("          |          "),c);
+                }
+                c.gridy = gridY;
+                c.gridx = gridX;
+                gridX++;
                 jTextFieldArray[i][j] = new JTextField(3);
                 jTextFieldArray[i][j].setText("" + _bar.getPulse(i, j));
                 center.add(jTextFieldArray[i][j], c);
