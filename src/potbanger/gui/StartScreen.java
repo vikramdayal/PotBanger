@@ -56,7 +56,7 @@ public class StartScreen extends javax.swing.JFrame {
     private void saveSongs(){
         PrintWriter out = null;
         try {
-            //BuffereWiter pf = new BuffereWiter(new File("songs.vickyd"));
+            //BuffereWiter pf = new BuffereWiter(new File("config.txt"));
             out = new PrintWriter(new FileWriter("songs.vickyd"));
             for (Object s: listSongsModel.toArray()){
                 out.println((String)s);
