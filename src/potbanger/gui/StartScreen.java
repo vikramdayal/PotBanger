@@ -8,8 +8,10 @@ package potbanger.gui;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -29,8 +31,16 @@ public class StartScreen extends javax.swing.JFrame {
      * Creates new form StartScreen
      */
     public StartScreen() {
-        initComponents();
-        loadSongs();
+        try {
+            initComponents();
+            loadSongs();     
+            List<String> s = Files.readAllLines(Paths.get("config.txt"),StandardCharsets.UTF_8);
+            this.txtCommPort.setText(s.get(0));
+        } catch (IOException ex) {
+            this.txtCommPort.setText("COM3");
+            Logger.getLogger(StartScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
  
     private void loadSongs() {
@@ -51,6 +61,9 @@ public class StartScreen extends javax.swing.JFrame {
             for (Object s: listSongsModel.toArray()){
                 out.println((String)s);
             }
+            out.close();
+            out = new PrintWriter(new FileWriter("songs.vickyd"));
+            out.println(this.txtCommPort.getText());
         } catch (IOException ex) {
             Logger.getLogger(StartScreen.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -332,6 +345,7 @@ public class StartScreen extends javax.swing.JFrame {
         }
         Sheet.CommPort = this.txtCommPort.getText();
         try {
+            Sheet.CommPort =this.txtCommPort.getText();
             Sheet.StartPin = Integer.parseInt(this.txtStartPin.getText());
         } catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Enter a start pin.");

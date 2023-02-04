@@ -33,11 +33,14 @@ public class TwoWaySerialComm
     
     public void send(String cmd)
     {
+        System.out.println("sendinf-- " + cmd);
         writer.send(cmd);
+        System.out.println("sent-- " + cmd);
     }
     
     public void connect ( String portName ) throws Exception
     {
+        System.out.println("Connecting to port:"+ portName);
         CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
         if ( portIdentifier.isCurrentlyOwned() )
         {
